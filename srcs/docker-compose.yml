@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+    nginx:
+        build:
+            context: nginx
+        ports:
+            - "80:80"
+        restart: always
+        container_name: inc_nginx
+        volumes:
+            - "../.data/wordpress:/var/www"
+    php:
+        build:
+            context: php
+        restart: always
+        container_name: inc_php
+        volumes:
+            - "../.data/wordpress:/var/www"
+    mysql:
+        build:
+            context: mysql
+        restart: always
+        container_name: inc_mysql
+        volumes:
+            - "../.data/mysql:/var/lib/mysql"
