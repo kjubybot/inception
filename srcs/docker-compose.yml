@@ -32,3 +32,8 @@ services:
         container_name: inc_adm
         volumes:
             - "../.data/adminer:/var/adminer"
+    redis:
+        build:
+            context: redis
+        restart: always
+        container_name: inc_redis
