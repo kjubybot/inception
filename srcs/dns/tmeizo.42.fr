@@ -1,0 +1,10 @@
+@	IN	SOA	dns.tmeizo.42.fr  root.tmeizo.42.fr (
+			1	    ; Serial
+			604800	; Refresh
+			86400	; Retry
+			2419200	; 
+			604800 );
+@	IN	NS	dns
+@	IN	A	127.0.0.1
+dns	IN	A	127.0.0.1
+adm	IN	A	127.0.0.1

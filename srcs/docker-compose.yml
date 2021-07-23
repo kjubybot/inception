@@ -10,7 +10,7 @@ services:
         container_name: inc_nginx
         volumes:
             - "../.data/wordpress:/var/www"
-            #- "../.data/phpmyadmin:/var/www/pma"
+            - "../.data/adminer:/var/adminer"
     wordpress:
         build:
             context: wordpress
@@ -25,10 +25,10 @@ services:
         container_name: inc_mysql
         volumes:
             - "../.data/mysql:/var/lib/mysql"
-    #pma:
-        #build:
-            #context: phpmyadmin
-        #restart: always
-        #container_name: inc_pma
-        #volumes:
-            #- "../.data/phpmyadmin:/var/www/pma"
+    adminer:
+        build:
+            context: adminer
+        restart: always
+        container_name: inc_adm
+        volumes:
+            - "../.data/adminer:/var/adminer"
