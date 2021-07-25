@@ -20,13 +20,13 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'wp' );
+define( 'DB_NAME', $_ENV['DB_NAME'] );
 
 /** MySQL database username */
-define( 'DB_USER', 'tmeizo' );
+define( 'DB_USER', $_ENV['DB_USER']);
 
 /** MySQL database password */
-define( 'DB_PASSWORD', 'pass' );
+define( 'DB_PASSWORD', $_ENV['DB_PASS'] );
 
 /** MySQL hostname */
 define( 'DB_HOST', 'mysql' );
@@ -39,7 +39,7 @@ define( 'DB_COLLATE', '' );
 
 define( 'WP_REDIS_HOST', 'redis' );
 define( 'WP_REDIS_PORT', 6379 );
-define( 'WP_REDIS_PASSWORD', 'pass' );
+define( 'WP_REDIS_PASSWORD', $_ENV['REDIS_PASS'] );
 
 // change the database for each site to avoid cache collisions
 define( 'WP_REDIS_DATABASE', 0 );

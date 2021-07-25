@@ -1,39 +1,111 @@
+---
 version: "3.9"
+
+networks:
+    inc-net:
+        name: inc_net
+
+volumes:
+    wordpress:
+        name: inc_wp
+        driver: local
+        driver_opts:
+            type: none
+            device: "${DATA_PATH}/wordpress"
+            o: bind
+    mysql:
+        name: inc_mysql
+        driver: local
+        driver_opts:
+            type: none
+            device: "${DATA_PATH}/mysql"
+            o: bind
+    adminer:
+        name: inc_adm
+        driver: local
+        driver_opts:
+            type: none
+            device: "${DATA_PATH}/adminer"
+            o: bind
 
 services:
     nginx:
         build:
             context: nginx
         ports:
-            - "80:80"
+            - "443:443"
         restart: always
         container_name: inc_nginx
+        networks:
+            - inc-net
         volumes:
-            - "../.data/wordpress:/var/www"
-            - "../.data/adminer:/var/adminer"
+            - "wordpress:/var/www"
+            - "adminer:/var/adminer"
     wordpress:
         build:
             context: wordpress
         restart: always
         container_name: inc_wp
+        networks:
+            - inc-net
         volumes:
-            - "../.data/wordpress:/var/www"
+            - "wordpress:/var/www"
+        environment:
+            - "DB_USER=${DB_USER}"
+            - "DB_PASS=${DB_PASS}"
+            - "DB_NAME=${DB_NAME}"
+            - "REDIS_PASS=${REDIS_PASS}"
     mysql:
         build:
             context: mysql
         restart: always
         container_name: inc_mysql
+        networks:
+            - inc-net
         volumes:
-            - "../.data/mysql:/var/lib/mysql"
+            - "mysql:/var/lib/mysql"
+        environment:
+            - "DB_USER=${DB_USER}"
+            - "DB_PASS=${DB_PASS}"
+            - "DB_NAME=${DB_NAME}"
     adminer:
         build:
             context: adminer
         restart: always
         container_name: inc_adm
+        networks:
+            - inc-net
         volumes:
-            - "../.data/adminer:/var/adminer"
+            - "adminer:/var/adminer"
     redis:
         build:
             context: redis
         restart: always
         container_name: inc_redis
+        networks:
+            - inc-net
+    dns:
+        build:
+            context: dns
+        ports:
+            - "53:53/tcp"
+            - "53:53/udp"
+        restart: always
+        container_name: inc_dns
+        networks:
+            - inc-net
+    ftp:
+        build:
+            context: ftp
+            args:
+                - "FTP_USER=${FTP_USER}"
+                - "FTP_PASS=${FTP_PASS}"
+        ports:
+            - "21:21"
+            - "4444:4444"
+        restart: always
+        container_name: inc_ftp
+        networks:
+            - inc-net
+        volumes:
+            - "wordpress:/home/tmeizo"
