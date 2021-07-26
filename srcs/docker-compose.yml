@@ -50,11 +50,6 @@ services:
             - inc-net
         volumes:
             - "wordpress:/var/www"
-        environment:
-            - "DB_USER=${DB_USER}"
-            - "DB_PASS=${DB_PASS}"
-            - "DB_NAME=${DB_NAME}"
-            - "REDIS_PASS=${REDIS_PASS}"
     mysql:
         build:
             context: mysql
@@ -109,3 +104,12 @@ services:
             - inc-net
         volumes:
             - "wordpress:/home/tmeizo"
+    cats:
+        build:
+            context: cats
+        ports:
+            - "80:80"
+        restart: always
+        container_name: inc_cats
+        networks:
+            - int-net
