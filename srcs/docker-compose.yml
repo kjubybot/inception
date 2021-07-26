@@ -11,21 +11,21 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: "${DATA_PATH}/wordpress"
+            device: "${DATA}/wordpress"
             o: bind
     mysql:
         name: inc_mysql
         driver: local
         driver_opts:
             type: none
-            device: "${DATA_PATH}/mysql"
+            device: "${DATA}/mysql"
             o: bind
     adminer:
         name: inc_adm
         driver: local
         driver_opts:
             type: none
-            device: "${DATA_PATH}/adminer"
+            device: "${DATA}/adminer"
             o: bind
 
 services:
@@ -107,9 +107,7 @@ services:
     cats:
         build:
             context: cats
-        ports:
-            - "80:80"
         restart: always
         container_name: inc_cats
         networks:
-            - int-net
+            - inc-net

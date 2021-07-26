@@ -1,20 +1,18 @@
 HOME = ./
-DATA = $(HOME).data/
-WP = $(DATA)wordpress/
+WP = $(DATA)/wordpress/
 WPCONFIG = srcs/wordpress/wp-config.php
 
 REDIS = $(WP)wp-content/plugins/redis-cache/
 
-ADM = $(DATA)adminer/
+ADM = $(DATA)/adminer/
 ADMFILE = srcs/adminer/adminer.php
 
 start: $(WP) $(WP)wp-config.php $(REDIS) $(ADM)
-	docker-compose -f srcs/docker-compose.yml build
-	docker-compose -f srcs/docker-compose.yml up
+	docker-compose -f srcs/docker-compose.yml up -d --build
 
 $(DATA):
 	mkdir -p $(DATA)
-	mkdir -p $(DATA)mysql
+	mkdir -p $(DATA)/mysql
 
 $(WP): $(DATA)
 	mkdir -p $(WP)
